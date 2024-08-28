@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+#We are accessing the views file which is found in our application folder.(Grocery_app)
+from kgl import views
+#accessing the views of admin_app,the second app
+#from admin_app import views
+from django.contrib.auth import views as auth_views
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('login/',auth_views.LoginView.as_view(template_name = 'Grocery_app/login2.html'), name = 'login2'),
+    path('home/',views.home,name = "home"),
+    path('home/<int:product_id>/', views.product_detail,name = 'product_detail'),
+    path('',views.index,name ="index2"),
+    path('home/<int:product_id>/', views.delete_detail,name = 'delete_detail'),
+    path('delete/<int:product_id>/',views.delete_detail,name = 'delete_detail'),
+    path('logout/', auth_views.LogoutView.as_view(http_method_names = ['get', 'post', 'options']), name = 'logout'),
+    path('issue_item/<str:pk>/',views.issue_item,name = 'issue_item'),
+    path('receipt/',views.receipt,name = 'receipt'),
+    path('receipt/<int:receipt_id>',views.receipt_detail,name='receipt_detail'),
+    ]
+ 
